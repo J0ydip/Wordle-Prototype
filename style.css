@@ -4,10 +4,10 @@
     box-sizing: border-box;
 }
 
-/* Prototype Look: Plain white background, default font */
+
 body {
     font-family: Arial, sans-serif;
-    background: #f0f0f0; /* Light gray background */
+    background: #f0f0f0; 
     min-height: 100vh;
     padding: 20px;
     color: #333;
@@ -34,19 +34,19 @@ body {
     opacity: 0.8;
 }
 
-/* These styles are left unused since the stats card is removed from HTML */
+
 .stats, .stat-card {
     display: none; 
 }
-/* End Unused Styles */
 
 
-/* Use block display for sections with minimal padding/borders */
+
+
 .input-section, .recommendations, .history {
     background: white;
     padding: 15px;
     margin-bottom: 20px;
-    border: 1px solid #ccc; /* Simple border instead of shadows */
+    border: 1px solid #ccc; 
 }
 
 .input-group {
@@ -63,8 +63,8 @@ body {
     padding: 8px;
     font-size: 1rem;
     border: 1px solid #999;
-    border-radius: 0; /* Square edges */
-    letter-spacing: 5px; /* Tighter letter spacing */
+    border-radius: 0; 
+    letter-spacing: 5px; 
 }
 
 .guess-input:focus {
@@ -87,12 +87,12 @@ body {
     font-size: 1rem;
     font-weight: normal;
     cursor: pointer;
-    transition: none; /* Remove transitions */
+    transition: none; 
     background: #eee;
     color: #333;
 }
 
-/* Simple, distinct colors for feedback */
+
 .pattern-btn.gray {
     background: #aaa;
     color: black;
@@ -149,7 +149,7 @@ body {
     padding-bottom: 5px;
 }
 
-/* Word List: Simple columnar display */
+
 .word-list {
     display: flex;
     flex-wrap: wrap;
@@ -167,10 +167,10 @@ body {
     min-width: 100px;
 }
 
-/* Styling for the green-boxed possible answer (now with simple prototype colors) */
+
 .word-item[style*="border: 2px solid #6aaa64"] {
-    border: 2px solid #66cc66 !important; /* Simple green border */
-    background: #ddffdd !important; /* Simple light green background */
+    border: 2px solid #66cc66 !important; 
+    background: #ddffdd !important; 
 }
 
 .word-item:hover {
@@ -193,7 +193,7 @@ body {
     margin-top: 2px;
 }
 
-/* History Tiles: Simplified look */
+
 .guess-history {
     display: flex;
     flex-direction: column;
@@ -213,7 +213,7 @@ body {
     border-radius: 0;
     color: black;
     background: white;
-    /* Centering logic remains */
+    
     display: flex;
     align-items: center;
     justify-content: center;
@@ -221,7 +221,7 @@ body {
     text-transform: uppercase;
 }
 
-/* Simple, block colors for history tiles */
+
 .tile.gray {
     background: #aaa;
     color: black;
@@ -243,3 +243,4 @@ body {
     color: #666;
     font-style: italic;
 }
+
