@@ -1,246 +1,500 @@
+/* --- 1. Root & Light Mode Variables --- */
+:root {
+    --font-primary: 'Poppins', sans-serif;
+    --font-mono: 'Roboto Mono', monospace;
+    
+    --color-gray: #787c7e;
+    --color-yellow: #c9b458;
+    --color-green: #6aaa64;
+    --color-primary: #6366F1; /* Indigo */
+    
+    --bg-light: #FAF8F5;
+    --card-light: #FFFFFF;
+    --text-light: #1F2937;
+    --text-light-secondary: #6B7280;
+    --border-light: #E5E7EB;
+    --tile-border-light: #D1D5DB;
+    --row-bg-light: #F9FAFB;
+    --header-bg-light: #F3F4F6;
+    --tile-bg-light: var(--row-bg-light);
+    --card-shadow-light: 0 2px 8px rgba(0, 0, 0, 0.06);
+
+    --bg-dark: #121212;
+    --card-dark: #1E1E1E;
+    --text-dark: #E5E7EB; 
+    --text-dark-secondary: #9CA3AF; 
+    --border-dark: #3A3A3A;         
+    --tile-border-dark: #404040;      
+    --row-bg-dark: #252525;          
+    --header-bg-dark: #2D2D2D;      
+    --tile-bg-dark: #2D2D2D;         
+    --card-shadow-dark: 0 4px 12px rgba(0, 0, 0, 0.4); 
+    
+    --bg: var(--bg-light);
+    --card: var(--card-light);
+    --text: var(--text-light);
+    --text-sec: var(--text-light-secondary);
+    --border: var(--border-light);
+    --tile-border: var(--tile-border-light);
+    --row-bg: var(--row-bg-light);
+    --header-bg: var(--header-bg-light);
+    --tile-bg: var(--tile-bg-light);
+    --card-shadow: var(--card-shadow-light);
+    
+    --color-accent: var(--color-primary);
+    --color-accent-hover: #4f46e5; 
+    --color-accent-bg: rgba(99, 102, 241, 0.1); 
+    --color-accent-shadow: rgba(99, 102, 241, 0.3); 
+}
+
+/* --- 2. Dark Mode Definition --- */
+body[data-theme="dark"] {
+    --bg: var(--bg-dark);
+    --card: var(--card-dark);
+    --text: var(--text-dark);
+    --text-sec: var(--text-dark-secondary);
+    --border: var(--border-dark);
+    --tile-border: var(--tile-border-dark);
+    --row-bg: var(--row-bg-dark);
+    --header-bg: var(--header-bg-dark);
+    --tile-bg: var(--tile-bg-dark);
+    --card-shadow: var(--card-shadow-dark);
+    
+    --color-accent: var(--color-green);
+    --color-accent-hover: #5a9a54; 
+    --color-accent-bg: rgba(106, 170, 100, 0.1);
+    --color-accent-shadow: rgba(106, 170, 100, 0.3);
+}
+
+/* --- 3. Global Styles --- */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
-
-
 body {
-    font-family: Arial, sans-serif;
-    background: #f0f0f0; 
-    min-height: 100vh;
+    font-family: var(--font-primary);
+    background-color: var(--bg);
+    color: var(--text);
     padding: 20px;
-    color: #333;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.container {
-    max-width: 800px;
-    margin: 0 auto;
-}
-
+/* --- 4. Header & Theme Toggle --- */
 .header {
+    max-width: 1000px;
+    margin: 0 auto 30px auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     text-align: center;
-    color: #333;
-    margin-bottom: 20px;
+    border-bottom: 2px solid var(--border);
+    padding-bottom: 20px;
+    transition: border-color 0.3s ease;
 }
-
+.header-content {
+    text-align: center;
+    flex-grow: 1;
+}
 .header h1 {
-    font-size: 2rem;
-    margin-bottom: 5px;
+    font-size: 2.25rem;
+    font-weight: 700;
 }
-
 .header p {
     font-size: 1rem;
-    opacity: 0.8;
+    color: var(--text-sec);
 }
-
-
-.stats, .stat-card {
-    display: none; 
-}
-
-
-
-
-.input-section, .recommendations, .history {
-    background: white;
-    padding: 15px;
-    margin-bottom: 20px;
-    border: 1px solid #ccc; 
-}
-
-.input-group {
-    margin-bottom: 15px;
-}
-
-.input-group label {
-    margin-bottom: 5px;
-    font-weight: normal;
-}
-
-.guess-input {
-    width: 100%;
-    padding: 8px;
-    font-size: 1rem;
-    border: 1px solid #999;
-    border-radius: 0; 
-    letter-spacing: 5px; 
-}
-
-.guess-input:focus {
-    outline: none;
-    border-color: black;
-}
-
-.pattern-selector {
-    display: flex;
-    gap: 5px;
-    justify-content: center;
-    margin-bottom: 15px;
-}
-
-.pattern-btn {
-    width: 40px;
-    height: 40px;
-    border: 1px solid #333;
-    border-radius: 0;
-    font-size: 1rem;
-    font-weight: normal;
+.theme-toggle {
+    font-size: 1.5rem;
+    background: none;
+    border: none;
+    color: var(--text);
     cursor: pointer;
-    transition: none; 
-    background: #eee;
-    color: #333;
-}
-
-
-.pattern-btn.gray {
-    background: #aaa;
-    color: black;
-}
-
-.pattern-btn.yellow {
-    background: #ffcc00;
-    color: black;
-}
-
-.pattern-btn.green {
-    background: #66cc66;
-    color: black;
-}
-
-.button-group {
-    display: flex;
-    gap: 10px;
-}
-
-.btn {
-    flex: 1;
-    padding: 10px 20px;
-    font-size: 0.9rem;
-    font-weight: normal;
-    border: 1px solid black;
-    border-radius: 0;
-    cursor: pointer;
-    transition: none;
-}
-
-.btn-primary {
-    background: #333;
-    color: white;
-}
-
-.btn-primary:hover {
-    background: #555;
-}
-
-.btn-secondary {
-    background: white;
-    color: #333;
-}
-
-.btn-secondary:hover {
-    background: #eee;
-}
-
-.recommendations h2, .history h2 {
-    margin-bottom: 10px;
-    font-size: 1.2rem;
-    border-bottom: 1px solid #ccc;
-    padding-bottom: 5px;
-}
-
-
-.word-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-}
-
-.word-item {
-    padding: 5px;
-    background: #fff;
-    border: 1px solid #ccc;
-    border-radius: 0;
-    cursor: pointer;
-    transition: none;
-    text-align: center;
-    min-width: 100px;
-}
-
-
-.word-item[style*="border: 2px solid #6aaa64"] {
-    border: 2px solid #66cc66 !important; 
-    background: #ddffdd !important; 
-}
-
-.word-item:hover {
-    background: #ddd;
-    color: #333;
-    border-color: #333;
-    transform: none;
-}
-
-.word-item .word {
-    font-size: 1rem;
-    font-weight: bold;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-.word-item .entropy {
-    font-size: 0.8rem;
-    color: #666;
-    margin-top: 2px;
-}
-
-
-.guess-history {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-}
-
-.guess-item {
-    display: flex;
-    gap: 3px;
-}
-
-.tile {
-    width: 35px;
-    height: 35px;
-    font-size: 1rem;
-    border: 1px solid #333;
-    border-radius: 0;
-    color: black;
-    background: white;
-    
+    padding: 8px; 
+    border-radius: 50%;
+    width: 44px;
+    height: 44px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-weight: bold;
+    transition: all 0.2s ease;
+}
+.theme-toggle:hover {
+    background-color: var(--border); 
+}
+.theme-toggle svg {
+    width: 24px;
+    height: 24px;
+    stroke: var(--text-sec); 
+    transition: all 0.3s ease;
+}
+.theme-toggle:hover svg {
+    stroke: var(--text);
+}
+body[data-theme="dark"] .theme-toggle .icon-moon { display: block; }
+body[data-theme="dark"] .theme-toggle .icon-sun { display: none; }
+body[data-theme="light"] .theme-toggle .icon-moon { display: none; }
+body[data-theme="light"] .theme-toggle .icon-sun { display: block; }
+
+
+/* --- 5. Main Layout --- */
+.solver-layout {
+    max-width: 1000px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 32px; 
+}
+.main-content {
+    display: flex;
+    flex-direction: column;
+    gap: 32px; 
+}
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 24px; 
+}
+.card {
+    background-color: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 24px; 
+    transition: all 0.3s ease;
+    box-shadow: var(--card-shadow); 
+}
+.card h2 {
+    font-size: 1.4rem; 
+    font-weight: 600; 
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 15px;
+}
+
+/* --- 6. Game Board (History) --- */
+.game-board-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+    width: 100%;
+    max-width: 350px;
+    margin: 0 auto;
+}
+.tile {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    /* MODIFIED: This is the interactive/visual core */
+    border: 2px solid var(--tile-border); 
+    border-radius: 6px; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-size: 2rem;
+    font-weight: 700;
     text-transform: uppercase;
+    transition: all 0.2s ease;
+    background-color: var(--tile-bg); 
+    
+    /* ADDED: Make tiles appear clickable */
+    cursor: pointer;
+}
+body[data-theme="dark"] .tile {
+    background-color: #2D2D2D;
+}
+.tile:hover {
+    transform: scale(1.02); 
+    border-color: var(--text-sec);
+    box-shadow: 0 0 0 2px var(--color-accent-shadow);
+}
+.tile:active {
+    transform: scale(0.98);
+    box-shadow: none;
+}
+body[data-theme="light"] .tile:hover {
+    background-color: #F3F4F6;
+    box-shadow: none;
 }
 
-
-.tile.gray {
-    background: #aaa;
-    color: black;
+.tile.preview {
+    color: var(--text-sec);
+    border-color: var(--tile-border); 
+    transform: scale(0.95);
+    background-color: transparent; 
 }
+/* IMPORTANT FIX: Colored tiles should fill completely */
+.tile.gray { background-color: var(--color-gray) !important; color: white !important; border-color: var(--color-gray); }
+.tile.yellow { background-color: var(--color-yellow) !important; color: white !important; border-color: var(--color-yellow); }
+.tile.green { background-color: var(--color-green) !important; color: white !important; border-color: var(--color-green); }
 
-.tile.yellow {
-    background: #ffcc00;
-    color: black;
+/* --- 7. Input Section --- */
+.input-container label {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-sec);
+    margin-bottom: 8px;
 }
-
-.tile.green {
-    background: #66cc66;
-    color: black;
-}
-
-.empty-state {
+.guess-input {
+    width: 100%;
+    padding: 12px;
+    font-size: 1.1rem;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
     text-align: center;
-    padding: 20px;
-    color: #666;
-    font-style: italic;
+    background-color: var(--bg);
+    border: 2px solid var(--tile-border); 
+    border-radius: 4px;
+    color: var(--text);
+    margin-bottom: 20px;
+    transition: all 0.2s ease;
+}
+.guess-input::placeholder {
+    color: var(--text-sec);
+    opacity: 0.8;
+}
+body[data-theme="dark"] .guess-input {
+    background-color: #2D2D2D;
+}
+.guess-input:focus {
+    outline: none;
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 2px var(--color-accent-shadow);
+}
+.pattern-selector {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    margin-bottom: 20px;
 }
 
+/* Base Pattern Button Styles (NOT the game board) */
+.pattern-btn {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 4px;
+    font-size: 1.5rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    
+    background-color: var(--tile-bg); /* Default background color */
+    color: var(--text-sec);
+    border: 2px solid var(--tile-border);
+    /* REMOVED: No hover/active on these, as they are not the main interaction area */
+}
+
+/* Pattern Button Color Overrides (Fixes the background color) */
+.pattern-btn.gray { background-color: var(--color-gray) !important; color: white !important; border-color: var(--color-gray) !important; }
+.pattern-btn.yellow { background-color: var(--color-yellow) !important; color: white !important; border-color: var(--color-yellow) !important; }
+.pattern-btn.green { background-color: var(--color-green) !important; color: white !important; border-color: var(--color-green) !important; }
+
+.button-group { display: flex; gap: 10px; }
+.btn {
+    flex: 1; padding: 12px 20px; font-size: 1rem;
+    font-weight: 600; font-family: var(--font-primary);
+    border: none; border-radius: 8px;
+    cursor: pointer; transition: all 0.2s ease;
+}
+.btn-primary { background: var(--color-accent); color: white; } 
+.btn-primary:hover { background: var(--color-accent-hover); } 
+.btn-secondary { background: var(--border); color: var(--text); }
+.btn-secondary:hover { background-color: var(--text-sec); color: var(--card); }
+
+/* --- 8. Sidebar --- */
+.sidebar-title {
+    font-size: 1.2rem; 
+    font-weight: 600; 
+    color: var(--text);
+    margin-bottom: 15px; 
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 10px;
+}
+.stat-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1rem;
+    color: var(--text-sec);
+    margin-bottom: 10px;
+}
+.stat-line span:first-child {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    color: var(--text);
+}
+.stat-line .stat-label {
+    font-family: var(--font-primary);
+    font-weight: 400;
+    font-size: 0.9rem;
+    color: var(--text-sec);
+}
+#stat-possible-words, #stat-uncertainty {
+    color: var(--color-accent); 
+    font-size: 1.1rem; 
+}
+
+.solution-container {
+    display: none;
+    background-color: var(--color-accent-bg); 
+    border: 2px solid var(--color-accent); 
+    border-radius: 8px;
+    padding: 20px;
+    margin-top: 20px;
+    text-align: center;
+}
+.solution-container.show {
+    display: block;
+}
+.solution-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--text);
+}
+.solution-word {
+    font-family: var(--font-mono);
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--color-accent); 
+    letter-spacing: 0.1em;
+    margin-top: 10px;
+}
+
+.card.hidden {
+    display: none;
+}
+
+.top-picks-header {
+    display: grid;
+    grid-template-columns: 1fr 50px 60px;
+    gap: 10px;
+    font-size: 0.8rem;
+    color: var(--text-sec);
+    font-weight: 600;
+    padding: 10px 12px;
+    background-color: var(--header-bg);
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 0; 
+    text-align: right;
+    border-radius: 6px 6px 0 0; 
+}
+.top-picks-header span:first-child { text-align: left; }
+
+.word-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0; 
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(5px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.word-item {
+    display: grid;
+    grid-template-columns: 1fr 50px 60px;
+    gap: 10px;
+    padding: 12px;
+    border-radius: 0;
+    cursor: pointer;
+    transition: background-color 0.15s ease; 
+    font-family: var(--font-mono);
+    font-weight: 700;
+    text-align: right;
+    animation: fadeIn 0.4s ease-out;
+    border-bottom: 1px solid var(--border);
+}
+.word-list .word-item:last-child {
+    border-bottom: none;
+    border-radius: 0 0 6px 6px; 
+}
+.word-item:nth-child(even) {
+    background-color: var(--row-bg);
+}
+.word-item:hover {
+    background-color: var(--border);
+}
+.word-item .word {
+    text-align: left;
+    text-transform: uppercase;
+    color: var(--color-accent); 
+    letter-spacing: 1px;
+    transition: all 0.15s ease;
+}
+.word-item:hover .word {
+    text-decoration: underline;
+    color: var(--color-accent-hover);
+}
+
+.word-item .entropy {
+    color: var(--text);
+}
+.word-item .prob {
+    color: var(--text-sec);
+}
+.empty-state {
+    font-size: 0.9rem;
+    color: var(--text-sec);
+    text-align: center;
+    padding: 20px 0;
+}
+.word-item.is-answer .word {
+    color: var(--color-accent); 
+    font-weight: 700;
+}
+.empty-state.solved-message {
+    color: var(--color-accent); 
+    font-weight: 600;
+    text-align: center;
+}
+
+/* --- 9. Mobile Responsiveness --- */
+@media (max-width: 800px) {
+    .solver-layout {
+        grid-template-columns: 1fr;
+    }
+    .header {
+        flex-direction: column;
+        gap: 15px;
+    }
+    .game-board-grid {
+        max-width: 320px;
+    }
+}
+
+/* --- 10. Toast Notification Styles --- */
+#toast-notification {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: var(--card);
+    color: var(--text);
+    padding: 15px 25px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    z-index: 10000;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+}
+#toast-notification.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+#toast-message {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-accent); 
+}
