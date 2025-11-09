@@ -3,53 +3,130 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wordle Solver - Information Theory Prototype</title>
+    <title>Wordle Solver - Final Project</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="style.css"> 
+
+    <style>
+        body[data-theme="dark"] {
+            --bg: #121212;
+            --card: #1e1e1e;
+            --text: #e1e1e1;
+            --text-sec: #888;
+            --border: #3a3a3c;
+        }
+        #loader {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background-color: var(--bg, #121212); z-index: 9999;
+            display: flex; align-items: center; justify-content: center;
+            opacity: 1; visibility: visible;
+            transition: opacity 0.5s ease-out, visibility 0s 0.5s; 
+        }
+        #loader.hidden { opacity: 0; visibility: hidden; }
+        .loader-content { text-align: center; font-family: 'Poppins', sans-serif; }
+        .loader-content h1 { font-size: 1.5rem; color: var(--text, #e1e1e1); }
+        .loader-content p { font-size: 1rem; color: var(--text-sec, #888); margin-top: 10px; }
+        .spinner {
+            width: 50px; height: 50px;
+            border: 5px solid var(--border, #3a3a3c);
+            border-top-color: #5c6bc0;
+            border-radius: 50%; margin: 0 auto 20px auto;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+    </style>
 </head>
-<body>
-    <div class="container">
-        <div class="header">
-            <h1>🎯 Wordle Solver</h1>
-            <p>Information Theory Based Word Recommendations</p>
+
+<body data-theme="dark">
+
+    <div id="loader">
+        <div class="loader-content">
+            <div class="spinner"></div>
+            <h1>Loading Wordle Solver...</h1>
+            <p id="loader-message">Loading word lists...</p>
         </div>
+    </div>
 
-        <div class="input-section">
-            <div class="input-group">
-                <label>Enter Your Guess</label>
-                <input type="text" id="guessInput" class="guess-input" maxlength="5" placeholder="WORD">
-            </div>
+    <header class="header">
+        <div class="header-content">
+            <h1>Wordle Solver</h1>
+            <p>Information theory-based word recommendation system</p>
+        </div>
+        <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
+            <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+            <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        </button>
+    </header>
 
-            <div class="input-group">
-                <label>Select Pattern (Click tiles: Gray → Yellow → Green)</label>
+    <div class="solver-layout">
+        <main class="main-content">
+            <section class="card game-board-container">
+                <h2>Game Board</h2>
+                <div class="game-board-grid" id="game-board-grid"></div>
+            </section>
+            <section class="card input-container">
+                <h2>Enter Your Guess</h2>
+                <label for="guessInput">Word Guessed</label>
+                <input type="text" id="guessInput" class="guess-input" maxlength="5" placeholder="ENTER 5-LETTER WORD">
+                <label>Select Pattern (Click tiles)</label>
                 <div class="pattern-selector" id="patternSelector">
-                    <button class="pattern-btn gray" data-index="0">_</button>
-                    <button class="pattern-btn gray" data-index="1">_</button>
-                    <button class="pattern-btn gray" data-index="2">_</button>
-                    <button class="pattern-btn gray" data-index="3">_</button>
-                    <button class="pattern-btn gray" data-index="4">_</button>
+                    <button class="pattern-btn" data-index="0">_</button>
+                    <button class="pattern-btn" data-index="1">_</button>
+                    <button class="pattern-btn" data-index="2">_</button>
+                    <button class="pattern-btn" data-index="3">_</button>
+                    <button class="pattern-btn" data-index="4">_</button>
+                </div>
+                <div class="button-group">
+                    <button class="btn btn-primary" id="submitBtn">Submit Guess</button>
+                    <button class="btn btn-secondary" id="resetBtn">New Game</button>
+                </div>
+            </section>
+        </main>
+        
+        <aside class="sidebar">
+            <div class="card sidebar-card" id="possibilities-card">
+                <h3 class="sidebar-title">Possibilities/Uncertainty</h3>
+                <div class="stat-line">
+                    <span id="stat-possible-words">...</span>
+                    <span class="stat-label">Pos.</span>
+                </div>
+                <div class="stat-line">
+                    <span id="stat-uncertainty">...</span>
+                    <span class="stat-label">Bits</span>
+                </div>
+                
+                <div class="solution-container" id="solution-container">
+                    <div class="solution-title">Solution Found!</div>
+                    <div class="solution-word" id="solution-word">MUSIC</div>
                 </div>
             </div>
 
-            <div class="button-group">
-                <button class="btn btn-primary" id="submitBtn">Submit Guess</button>
-                <button class="btn btn-secondary" id="resetBtn">Reset</button>
+            <div class="card sidebar-card" id="top-picks-card">
+                <h3 class="sidebar-title">Top picks</h3>
+                <div class="top-picks-header">
+                    <span>Word</span>
+                    <span>E[Info.]</span>
+                    <span>p(word)</span>
+                </div>
+                <div class="word-list" id="recommendationsList">
+                    <div class="empty-state">Loading...</div>
+                </div>
             </div>
-        </div>
-
-        <div class="recommendations">
-            <h2>📊 Recommended Next Guesses</h2>
-            <div id="recommendationsList" class="word-list">
-                <div class="empty-state">Loading recommendations...</div>
+            
+            <div class="card sidebar-card" id="game-stats-card">
+                <h3 class="sidebar-title">Game Statistics</h3>
+                <div class="stat-line">
+                    <span>Turn:</span>
+                    <span id="stat-turn">1</span>
+                </div>
             </div>
-        </div>
-
-        <div class="history">
-            <h2>📝 Guesses History</h2>
-            <div id="guessesHistory" class="guess-history">
-                <div class="empty-state">No guesses yet</div>
-            </div>
-        </div>
+        </aside>
+    </div> <div id="toast-notification" class="toast">
+        <span id="toast-message"></span>
     </div>
 
     <script src="script.js"></script>
