@@ -1,6 +1,6 @@
-/* --- 1. THE "BRAIN" (Unchanged) --- */
+/* --- 1. THE "BRAIN"  --- */
 class WordleSolver {
-    // ... (Your entire, unchanged WordleSolver class) ...
+    
     constructor(possibleAnswers, allowedGuesses) {
         this.possibleAnswers = possibleAnswers;
         this.allowedGuesses = allowedGuesses;
@@ -399,3 +399,4 @@ async function initializeApp() {
 
 // Start the application
 initializeApp();
+
